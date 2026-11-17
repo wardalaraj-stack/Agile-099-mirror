@@ -11,6 +11,6 @@ def Buttons():
 
     end = tk.Button(root, text = "Close the game", command = root.destroy)
     end.pack()
-
+    root.mainloop()
 
 Buttons()
