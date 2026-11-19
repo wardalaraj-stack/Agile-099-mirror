@@ -4,7 +4,7 @@ import pygame
 class BoardView:
     #Pygame drawing adapter; the Board itself does not depend on pygame.
 
-    def __init__(self, board, offset=(0, 0), background=(15, 43, 92),   #change background color here
+    def __init__(self, board, offset=(0, 0), background=(15, 43, 92),       #change background color here
                  grid_color=(255, 153, 235)):                               #change grid color here 
         
         #Set up how to draw a board.

@@ -37,8 +37,31 @@ class Board:
         for y in range(self.height):
             for x in range(self.width):
                 yield (x, y)
-
     
+    def outside_edges(self, position):
+            #Return crossed sides for an integer position, horizontal side first.
+            column, row = position
+            if type(column) is not int or type(row) is not int:
+                raise TypeError("A cell position must contain two integers.")
+
+            edges = []
+            if column < 0:
+                edges.append("left")
+            elif column >= self.width:
+                edges.append("right")
+
+            if row < 0:
+                edges.append("top")
+            elif row >= self.height:
+                edges.append("bottom")
+
+            return tuple(edges)
+    
+    def contains(self, position):
+        """Return whether position belongs to the grid, including its corners."""
+        return not self.outside_edges(position)
+
+"""
     def free_cell(self, occupied=()):
         
         #Return a randomly chosen available position, or None if there is none.
@@ -53,6 +76,7 @@ class Board:
         if not available:
             return None
         return self._rng.choice(available)
+"""
 
 """
 to be impleminted :
