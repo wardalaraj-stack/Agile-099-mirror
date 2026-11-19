@@ -16,14 +16,14 @@ def showAndHide(visiable):
 menu = tk.Frame(console, bg= "Green")
 
 #-----------Main Menu--------------
-start = tk.Button(menu, text = "Start the game", command=lambda: showAndHide(startGame))
-start.pack()
-sett = tk.Button(menu, text = "Settings", command = lambda: showAndHide(settings))
-sett.pack()
-score = tk.Button(menu, text = "Scoreboard")
-score.pack()
-end = tk.Button(menu, text = "Close the game", command = console.destroy)
-end.pack()
+start = tk.Button(menu, text = "Start the game", command=lambda: showAndHide(startGame), width=15, height=2)
+start.pack(pady = 5, padx = 5)
+sett = tk.Button(menu, text = "Settings", command = lambda: showAndHide(settings), width=15, height=2)
+sett.pack(pady = 5, padx = 5)
+score = tk.Button(menu, text = "Scoreboard", width=15, height=2)
+score.pack(pady = 5, padx = 5)
+end = tk.Button(menu, text = "Close the game", command = console.destroy, width=15, height=2)
+end.pack(pady = 5, padx = 5)
 
 menu.pack()
 
@@ -31,14 +31,14 @@ menu.pack()
 startGame = tk.Frame(console, bg = "Lightblue")
 
 
-start = tk.Button(startGame, text = "Play")
-start.pack()
-lvl = tk.Button(startGame, text = "Difficulty level")
-lvl.pack()
-skins = tk.Button(startGame, text = "Change skin")
-skins.pack()
-goBack = tk.Button(startGame, text="Back to Main menu", command = lambda: showAndHide(menu))
-goBack.pack()
+start = tk.Button(startGame, text = "Play", width=15, height=2)
+start.pack(pady = 5, padx = 5)
+lvl = tk.Button(startGame, text = "Difficulty level", width=15, height=2)
+lvl.pack(pady = 5, padx = 5)
+skins = tk.Button(startGame, text = "Change skin", width=15, height=2)
+skins.pack(pady = 5, padx = 5)
+goBack = tk.Button(startGame, text="Back to Main menu", command = lambda: showAndHide(menu), width=15, height=2)
+goBack.pack(pady = 5, padx = 5)
 
 #----------Settings-------------
 settings = tk.Frame(console, bg = "Gray")
