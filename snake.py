@@ -24,3 +24,5 @@ class Snake:
     def get_color(self):
         return self.__color
 
+    def set_direction(self, x, y):
+        self.__direction = (x, y)
