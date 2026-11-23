@@ -59,7 +59,8 @@ def main():
                     ## The helper(next marker possitionn) keeps it from moving off the board.
             key_input.set_direction(event)
         snake.set_direction(*key_input.get_direction())
-        print(snake.get_direction())
+        #print(snake.get_direction())
+        #print(snake.get_head())
         
         screen.fill((15, 15, 18))
         view.draw(screen)
@@ -73,6 +74,8 @@ def main():
 
         pygame.display.flip()
         clock.tick(60)
+        snake.snake_move(snake.get_snake_speed()) #speed of snake
+        position = snake.get_head()
 
     pygame.quit()
 
