@@ -9,7 +9,8 @@ class Snake:
         self.__direction = (1, 0)
         self.__color = (0, 255, 0)
         self.__snake_speed = 3
-        self.__foodEaten = 3
+        self.__startingBodyLenght = 3
+        self.__foodEaten = 0
         self.spawnBody()
 
     def spawnBody(self):
@@ -53,6 +54,9 @@ class Snake:
     def get_food_eaten(self):
         return self.__foodEaten
 
+    def get_starting_lenght(self):
+            return self.__startingBodyLenght
+
     snakeSpeed = SnakeSpeed()
 
     def snakeUpdate(self, cells_per_sec):
@@ -65,11 +69,11 @@ class Snake:
         self.set_head(self.get_head()[0] + self.get_direction()[0], self.get_head()[1] + self.get_direction()[1])
 
     def snakeBodyMovement(self):
-        for i in (range(self.get_food_eaten(), -1, -1)):
+        for i in (range(self.get_food_eaten() + self.get_starting_lenght(), -1, -1)):
             if not(i == 0):
                 self.set_body(i, self.get_body()[i-1][0], self.get_body()[i-1][1])
                 continue
 
             self.set_body(i, self.get_head()[0], self.get_head()[1])
-            if(len(self.get_body()) -1 > self.get_food_eaten()):
+            if(len(self.get_body()) -1 > self.get_food_eaten() + self.get_starting_lenght()):
                 self.removeLastTail()
