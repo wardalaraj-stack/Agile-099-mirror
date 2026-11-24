@@ -1,6 +1,18 @@
 # Agile 099
 
+## Project
 
+A snake game developed in Python.
+
+### Setup
+
+See [Setup](docs/setup.md) for instructions on how to set up your environment and run the game.
+
+### Structure
+
+All application code is located in `src/`, tests in `tests/`, configuration in `config/` and documentation in `docs/`.
+
+The game is launched through `main.py`.
 
 ## Getting started
 
