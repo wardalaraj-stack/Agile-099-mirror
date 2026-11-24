@@ -1,8 +1,7 @@
 import pygame
-from Key_input import KeyInput
-from snake import Snake
-from board import Board
-from board_view import BoardView
+
+from src.board import Board
+from src.board_view import BoardView
 
 #### test marker for borders#####
 MARKER_COLOR = (36, 91, 149)
@@ -40,10 +39,6 @@ def main():
     pygame.display.set_caption("Snake - Board demo")
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 28)
-    key_input = KeyInput()
-    snake = Snake(0, 0)
-
-
 
     position = (0, 0)               # possition of test marker
     running = True
@@ -54,17 +49,16 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
+
                     ##checks whether the pressed key is an arrow key. If it is,
-                    ##the code moves the marker one cell in that direction and saves its new position. 
+                    ##the code moves the marker one cell in that direction and saves its new position.
                     ## The helper(next marker possitionn) keeps it from moving off the board.
-            key_input.set_direction(event)
-        snake.set_direction(*key_input.get_direction())
-        #print(snake.get_direction())
-        #print(snake.get_head())
-        
+                elif event.key in DIRECTIONS:
+                    position = next_marker_position(board, position, DIRECTIONS[event.key])
+
         screen.fill((15, 15, 18))
         view.draw(screen)
-        draw_marker(screen, view, position)         #draw for test marker 
+        draw_marker(screen, view, position)         #draw for test marker
 
         message = font.render(
             "ESC: quit",
@@ -74,13 +68,11 @@ def main():
 
         pygame.display.flip()
         clock.tick(60)
-        snake.snake_move(snake.get_snake_speed()) #speed of snake
-        position = snake.get_head()
 
     pygame.quit()
 
 
-    
+
 
 
 if __name__ == "__main__":

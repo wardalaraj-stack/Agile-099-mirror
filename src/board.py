@@ -26,12 +26,6 @@ class Board:
         #Return the registered rules as a tuple, which cannot be changed.
         return tuple(self._rules)
 
-
-    def contains(self, position):
-        #Return True if the (column, row) position is inside the board.
-        x, y = position
-        return 0 <= x < self.width and 0 <= y < self.height
-
     def cells(self):
         #Produce each board position one at a time as a (column, row) pair.
         for y in range(self.height):

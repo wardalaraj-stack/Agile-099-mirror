@@ -1,4 +1,3 @@
-import snake
 import pygame
 
 class KeyInput:
