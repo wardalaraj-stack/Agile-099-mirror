@@ -1,4 +1,6 @@
+from collision import snake_hits_itself
 from snake_speed import SnakeSpeed
+
 
 class Snake:
     """Stores the snake's position, body, direction, and color."""
