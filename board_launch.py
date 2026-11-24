@@ -74,7 +74,10 @@ def main():
 
         pygame.display.flip()
         clock.tick(60)
-        snake.snake_move(snake.get_snake_speed()) #speed of snake
+        
+        if snake.snake_move(snake.get_snake_speed()) is False:
+        # returns False when the next move collides with the snake’s body
+            running = False
         position = snake.get_head()
 
     pygame.quit()

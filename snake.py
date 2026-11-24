@@ -1,4 +1,6 @@
+from collision import snake_hits_itself
 from snake_speed import SnakeSpeed
+
 
 class Snake:
     """Stores the snake's position, body, direction, and color."""
@@ -34,7 +36,23 @@ class Snake:
 
     snakeSpeed = SnakeSpeed()
 
-    def snake_move(self, cells_per_sec):
+
+    def snake_move(self, cells_per_sec, growing=False):
+        #modified for snake collision with self(for now)/others(for futture)
         self.cells_per_sec = cells_per_sec
-        if(self.snakeSpeed.update(self.cells_per_sec)):
-            self.set_head(self.get_head()[0] + self.get_direction()[0], self.get_head()[1] + self.get_direction()[1])
+        if not self.snakeSpeed.update(self.cells_per_sec):
+            return None
+
+        head = self.get_head()
+        direction = self.get_direction()
+        next_head = [head[0] + direction[0], head[1] + direction[1]]
+
+        if snake_hits_itself(next_head, self.__body, growing):
+            return False
+
+        self.__body.insert(0, head.copy())
+        if not growing:
+            self.__body.pop()
+        self.set_head(*next_head)
+        return True
+    # end of collition modification
