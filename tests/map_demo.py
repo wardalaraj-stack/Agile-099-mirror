@@ -1,6 +1,6 @@
 """Show the map, its outer frame, and a test marker controlled by arrows."""
 
-from board import Board
+from src.board import Board
 
 
 CELL_SIZE = 46

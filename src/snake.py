@@ -1,4 +1,4 @@
-from snake_speed import SnakeSpeed
+from src.snake_speed import SnakeSpeed
 
 class Snake:
     """Stores the snake's position, body, direction, and color."""
