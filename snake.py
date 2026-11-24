@@ -7,10 +7,19 @@ class Snake:
 
     def __init__(self, x, y):
         self.__head = [x, y]
-        self.__body = []
+        self.__body = [(x, y)]
         self.__direction = (1, 0)
         self.__color = (0, 255, 0)
         self.__snake_speed = 3
+        self.__startingBodyLenght = 3
+        self.__foodEaten = 0
+        self.spawnBody()
+
+    def spawnBody(self):
+        self.set_body(10, self.get_head()[0] - self.get_direction()[0], self.get_head()[1] - self.get_direction()[1])
+        self.set_body(20, self.get_head()[0] - ( 2 *self.get_direction()[0]), self.get_head()[1] - ( 2 * self.get_direction()[1]))
+        self.set_body(20, self.get_head()[0] - ( 3 *self.get_direction()[0]), self.get_head()[1] - ( 3 * self.get_direction()[1]))
+        
 
     def get_head(self):
         return self.__head
@@ -31,28 +40,42 @@ class Snake:
     def set_direction(self, x, y):
         self.__direction = (x, y)
 
+    def set_body(self, index, x, y):
+        if (index >= len(self.get_body())):
+            self.__body.append((x,y))
+        else:
+            self.__body[index] = (x, y)
+
+    def removeLastTail(self):
+        return self.__body.pop(len(self.get_body())-1)
+    
+
     def get_snake_speed(self):
         return self.__snake_speed
 
+    def get_food_eaten(self):
+        return self.__foodEaten
+
+    def get_starting_lenght(self):
+            return self.__startingBodyLenght
+
     snakeSpeed = SnakeSpeed()
 
-
-    def snake_move(self, cells_per_sec, growing=False):
-        #modified for snake collision with self(for now)/others(for futture)
+    def snakeUpdate(self, cells_per_sec):
         self.cells_per_sec = cells_per_sec
-        if not self.snakeSpeed.update(self.cells_per_sec):
-            return None
+        if(self.snakeSpeed.update(self.cells_per_sec)):
+            self.snake_move()
+            self.snakeBodyMovement()
 
-        head = self.get_head()
-        direction = self.get_direction()
-        next_head = [head[0] + direction[0], head[1] + direction[1]]
+    def snake_move(self):                
+        self.set_head(self.get_head()[0] + self.get_direction()[0], self.get_head()[1] + self.get_direction()[1])
 
-        if snake_hits_itself(next_head, self.__body, growing):
-            return False
+    def snakeBodyMovement(self):
+        for i in (range(self.get_food_eaten() + self.get_starting_lenght(), -1, -1)):
+            if not(i == 0):
+                self.set_body(i, self.get_body()[i-1][0], self.get_body()[i-1][1])
+                continue
 
-        self.__body.insert(0, head.copy())
-        if not growing:
-            self.__body.pop()
-        self.set_head(*next_head)
-        return True
-    # end of collition modification
+            self.set_body(i, self.get_head()[0], self.get_head()[1])
+            if(len(self.get_body()) -1 > self.get_food_eaten() + self.get_starting_lenght()):
+                self.removeLastTail()

@@ -3,17 +3,14 @@ from Key_input import KeyInput
 from snake import Snake
 from board import Board
 from board_view import BoardView
+from Food import Food
+from Food_drawing import Food_drawing
+import random
+
 
 #### test marker for borders#####
 MARKER_COLOR = (36, 91, 149)
 MARKER_INSET = 6
-DIRECTIONS = {
-    pygame.K_LEFT: (-1, 0),
-    pygame.K_RIGHT: (1, 0),
-    pygame.K_UP: (0, -1),
-    pygame.K_DOWN: (0, 1),
-}
-
 
 def next_marker_position(board, position, step):
     column, row = position
@@ -26,6 +23,11 @@ def draw_marker(surface, view, position):
     rect = view.cell_rect(position).inflate(-2 * MARKER_INSET, -2 * MARKER_INSET)
     pygame.draw.ellipse(surface, MARKER_COLOR, rect)
 #### end test marker for bordar
+
+def draw_body(surface, view, position):
+    rect = view.cell_rect(position).inflate(-2 * MARKER_INSET, -2 * MARKER_INSET)
+    pygame.draw.ellipse(surface, MARKER_COLOR, rect)
+
 
 def main():
     pygame.init()
@@ -41,9 +43,12 @@ def main():
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 28)
     key_input = KeyInput()
-    snake = Snake(0, 0)
-
-
+    snake = Snake(random.randint(2, board.width -2), random.randint(2, board.height -2))
+#Food Logic
+    food = Food(15,5)
+    randomColumn = random.randrange(0, board.width) #Width
+    randomRow = random.randrange(0, board.height) #height
+    food.setFood(randomColumn, randomRow)
 
     position = (0, 0)               # possition of test marker
     running = True
@@ -59,12 +64,15 @@ def main():
                     ## The helper(next marker possitionn) keeps it from moving off the board.
             key_input.set_direction(event)
         snake.set_direction(*key_input.get_direction())
-        #print(snake.get_direction())
-        #print(snake.get_head())
         
         screen.fill((15, 15, 18))
-        view.draw(screen)
-        draw_marker(screen, view, position)         #draw for test marker 
+        view.draw(screen)                 
+        snake.snakeUpdate(snake.get_snake_speed()) #speed of snake
+        position = snake.get_head()        
+        Food_drawing.Draw_food( screen, view, food)
+        draw_marker(screen, view, position) #draw for test marker
+        for i in range(len(snake.get_body())):
+            draw_body(screen, view, (snake.get_body()[i]))
 
         message = font.render(
             "ESC: quit",
