@@ -11,16 +11,14 @@ class Snake:
         self.__direction = (1, 0)
         self.__color = (0, 255, 0)
         self.__snake_speed = 4
-        self.__startingBodyLenght = 4
+        self.__startingBodyLenght = 3
         self.__foodEaten = 0
         self.spawnBody()
 
     def spawnBody(self):
-        self.set_body(10, self.get_head()[0] - self.get_direction()[0], self.get_head()[1] - self.get_direction()[1])
-        self.set_body(20, self.get_head()[0] - ( 2 *self.get_direction()[0]), self.get_head()[1] - ( 2 * self.get_direction()[1]))
-        self.set_body(20, self.get_head()[0] - ( 3 *self.get_direction()[0]), self.get_head()[1] - ( 3 * self.get_direction()[1]))
+        for i in range(self.get_starting_lenght()):
+            self.set_body(i, self.get_head()[0] - ( i *self.get_direction()[0]), self.get_head()[1] - (i * self.get_direction()[1]))
         
-
     def get_head(self):
         return self.__head
 
