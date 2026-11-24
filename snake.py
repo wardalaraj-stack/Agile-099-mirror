@@ -6,12 +6,12 @@ class Snake:
     """Stores the snake's position, body, direction, and color."""
 
     def __init__(self, x, y):
-        self.__head = [x, y]
+        self.__head = (x, y)
         self.__body = [(x, y)]
         self.__direction = (1, 0)
         self.__color = (0, 255, 0)
-        self.__snake_speed = 3
-        self.__startingBodyLenght = 3
+        self.__snake_speed = 4
+        self.__startingBodyLenght = 4
         self.__foodEaten = 0
         self.spawnBody()
 
@@ -29,7 +29,7 @@ class Snake:
         return self.__body.copy()
 
     def set_head(self, x, y):
-        self.__head = [x, y]
+        self.__head = (x, y)
 
     def get_direction(self):
         return self.__direction
@@ -66,6 +66,7 @@ class Snake:
         if(self.snakeSpeed.update(self.cells_per_sec)):
             self.snake_move()
             self.snakeBodyMovement()
+            self.ouroboros()
 
     def snake_move(self):                
         self.set_head(self.get_head()[0] + self.get_direction()[0], self.get_head()[1] + self.get_direction()[1])
@@ -79,3 +80,14 @@ class Snake:
             self.set_body(i, self.get_head()[0], self.get_head()[1])
             if(len(self.get_body()) -1 > self.get_food_eaten() + self.get_starting_lenght()):
                 self.removeLastTail()
+
+    def ouroboros(self):
+        hitSelf = False
+        for i in range(len(self.get_body())-1):
+            if(snake_hits_itself(self.get_head(), self.get_body()[i+1], False)):
+                hitSelf = True
+        return hitSelf
+            
+
+    
+
