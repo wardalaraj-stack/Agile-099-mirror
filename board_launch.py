@@ -24,6 +24,10 @@ def draw_marker(surface, view, position):
     pygame.draw.ellipse(surface, MARKER_COLOR, rect)
 #### end test marker for bordar
 
+def draw_body(surface, view, position):
+    rect = view.cell_rect(position).inflate(-2 * MARKER_INSET, -2 * MARKER_INSET)
+    pygame.draw.ellipse(surface, MARKER_COLOR, rect)
+
 
 def main():
     pygame.init()
@@ -39,7 +43,7 @@ def main():
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 28)
     key_input = KeyInput()
-    snake = Snake(0, 0)
+    snake = Snake(random.randint(2, board.width -2), random.randint(2, board.height -2))
 #Food Logic
     food = Food(15,5)
     randomColumn = random.randrange(0, board.width) #Width
@@ -63,7 +67,11 @@ def main():
         
         screen.fill((15, 15, 18))
         view.draw(screen)
-        draw_marker(screen, view, position)         #draw for test marker 
+        draw_marker(screen, view, position)         #draw for test marker
+        snake.snakeUpdate(snake.get_snake_speed()) #speed of snake
+        position = snake.get_head()
+        for i in len(snake.get_body()):
+            draw_body(screen, view, snake.get_body[i])
         Food_drawing.Draw_food( screen, view, food)
 
         message = font.render(
@@ -74,8 +82,7 @@ def main():
 
         pygame.display.flip()
         clock.tick(60)
-        snake.snake_move(snake.get_snake_speed()) #speed of snake
-        position = snake.get_head()
+        
 
     pygame.quit()
 
