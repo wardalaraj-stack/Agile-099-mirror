@@ -5,16 +5,17 @@ class Snake:
 
     def __init__(self, x, y):
         self.__head = [x, y]
-        self.__body = [x, y]
+        self.__body = [(x, y)]
         self.__direction = (1, 0)
         self.__color = (0, 255, 0)
         self.__snake_speed = 3
-        self.__foodEaten = 2
+        self.__foodEaten = 3
         self.spawnBody()
 
     def spawnBody(self):
-        self.set_body(1, self.get_head().x - self.get_direction().x, self.get_head().y - self.get_direction().y)
-        self.set_body(2, self.get_head().x - ( 2 *self.get_direction().x), self.get_head().y - ( 2 * self.get_direction().y))
+        self.set_body(10, self.get_head()[0] - self.get_direction()[0], self.get_head()[1] - self.get_direction()[1])
+        self.set_body(20, self.get_head()[0] - ( 2 *self.get_direction()[0]), self.get_head()[1] - ( 2 * self.get_direction()[1]))
+        self.set_body(20, self.get_head()[0] - ( 3 *self.get_direction()[0]), self.get_head()[1] - ( 3 * self.get_direction()[1]))
         
 
     def get_head(self):
@@ -37,14 +38,13 @@ class Snake:
         self.__direction = (x, y)
 
     def set_body(self, index, x, y):
-        if (index => len(self.get_body())):
-            self.__body.append([x,y])
+        if (index >= len(self.get_body())):
+            self.__body.append((x,y))
         else:
-            self.__body[index].x = x
-            self.__body[index].y = y
+            self.__body[index] = (x, y)
 
     def removeLastTail(self):
-        return self.__body.remove(len(self.get_body()-1))
+        return self.__body.pop(len(self.get_body())-1)
     
 
     def get_snake_speed(self):
@@ -65,11 +65,11 @@ class Snake:
         self.set_head(self.get_head()[0] + self.get_direction()[0], self.get_head()[1] + self.get_direction()[1])
 
     def snakeBodyMovement(self):
-        for i in (range(self.get_food_eaten, 0, -1)):
+        for i in (range(self.get_food_eaten(), -1, -1)):
             if not(i == 0):
-                self.set_body(i, self.get_body()[i-1].x, self.get_body()[i-1].y)
+                self.set_body(i, self.get_body()[i-1][0], self.get_body()[i-1][1])
                 continue
 
-            self.set_body(i, self.get_head().x, self.get_head().y)
-            if(len(self.get_body) > self.get_food_eaten):
+            self.set_body(i, self.get_head()[0], self.get_head()[1])
+            if(len(self.get_body()) -1 > self.get_food_eaten()):
                 self.removeLastTail()

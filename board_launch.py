@@ -66,13 +66,13 @@ def main():
         snake.set_direction(*key_input.get_direction())
         
         screen.fill((15, 15, 18))
-        view.draw(screen)
-        draw_marker(screen, view, position)         #draw for test marker
+        view.draw(screen)                 
         snake.snakeUpdate(snake.get_snake_speed()) #speed of snake
-        position = snake.get_head()
-        for i in len(snake.get_body()):
-            draw_body(screen, view, snake.get_body[i])
+        position = snake.get_head()        
         Food_drawing.Draw_food( screen, view, food)
+        draw_marker(screen, view, position) #draw for test marker
+        for i in range(len(snake.get_body())):
+            draw_body(screen, view, (snake.get_body()[i]))
 
         message = font.render(
             "ESC: quit",
