@@ -1,4 +1,3 @@
-import snake
 
 def position_is_occupied(position, occupied_positions):
     #is the position opcubied by snake/obstical/enemy/otherplayer 
@@ -15,7 +14,11 @@ def snake_hits_itself(next_head, body, growing=False):
     else:
         return False
         
-
+def food_collision(foodPos, snakeHead):
+    if(foodPos == snakeHead):
+        return True
+    else:
+        return False
 
 def hits_obstacle(next_head, obstacles):
     #futer collision with obstical 

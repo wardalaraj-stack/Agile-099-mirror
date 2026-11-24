@@ -56,6 +56,9 @@ class Snake:
     def get_food_eaten(self):
         return self.__foodEaten
 
+    def increase_food_eaten(self):
+        self.__foodEaten += 1
+
     def get_starting_lenght(self):
             return self.__startingBodyLenght
 
@@ -66,7 +69,7 @@ class Snake:
         if(self.snakeSpeed.update(self.cells_per_sec)):
             self.snake_move()
             self.snakeBodyMovement()
-            self.ouroboros()
+            self.ouroboros()       
 
     def snake_move(self):                
         self.set_head(self.get_head()[0] + self.get_direction()[0], self.get_head()[1] + self.get_direction()[1])
@@ -87,6 +90,7 @@ class Snake:
             if(snake_hits_itself(self.get_head(), self.get_body()[i+1], False)):
                 hitSelf = True
         return hitSelf
+
             
 
     
