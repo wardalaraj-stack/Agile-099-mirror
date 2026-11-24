@@ -6,6 +6,7 @@ from board_view import BoardView
 from Food import Food
 from Food_drawing import Food_drawing
 import random
+from collision import food_collision
 
 
 #### test marker for borders#####
@@ -27,7 +28,7 @@ def draw_marker(surface, view, position):
 def draw_body(surface, view, position):
     rect = view.cell_rect(position).inflate(-2 * MARKER_INSET, -2 * MARKER_INSET)
     pygame.draw.ellipse(surface, MARKER_COLOR, rect)
-
+    
 
 def main():
     pygame.init()
@@ -45,12 +46,8 @@ def main():
     key_input = KeyInput()
     snake = Snake(random.randint(2, board.width -2), random.randint(2, board.height -2))
 #Food Logic
-    food = Food(15,5)
-    randomColumn = random.randrange(0, board.width) #Width
-    randomRow = random.randrange(0, board.height) #height
-    food.setFood(randomColumn, randomRow)
+    food = Food(random.randrange(0, board.width),random.randrange(0, board.height))
 
-    position = (0, 0)               # possition of test marker
     running = True
     while running:
         for event in pygame.event.get():
@@ -83,14 +80,12 @@ def main():
         pygame.display.flip()
         clock.tick(60)
 
-        #print(snake.ouroboros())
         if(snake.ouroboros()):
             running = False
-        
-        #if snake.snake_move(snake.get_snake_speed()) is False:
-            #returns False when the next move collides with the snake’s body
-            #running = False
-        #position = snake.get_head()
+
+        if(food_collision(food.getFood(), snake.get_head())): #this is really bad, fix this
+            snake.increase_food_eaten()
+            food.newFood(random.randint(0, board.width), random.randint(0, board.height))
 
     pygame.quit()
 
