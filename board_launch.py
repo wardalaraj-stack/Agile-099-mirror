@@ -13,6 +13,7 @@ from collision import food_collision
 MARKER_COLOR = (36, 91, 149)
 MARKER_INSET = 6
 
+
 def next_marker_position(board, position, step):
     column, row = position
     column_step, row_step = step
@@ -32,7 +33,7 @@ def draw_body(surface, view, position):
 
 def main():
     pygame.init()
-
+    
     board = Board(width=40, height=20, cell_size=32)
 
     view = BoardView(board, offset=(20, 20))
@@ -47,9 +48,10 @@ def main():
     snake = Snake(random.randint(2, board.width -2), random.randint(2, board.height -2))
 #Food Logic
     food = Food(random.randrange(0, board.width),random.randrange(0, board.height))
-
+    score = 0
     running = True
     while running:
+        dt = clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -64,12 +66,28 @@ def main():
         
         screen.fill((15, 15, 18))
         view.draw(screen)                 
-        snake.snakeUpdate(snake.get_snake_speed()) #speed of snake
+        snake.snakeUpdate(dt) #speed of snake
         position = snake.get_head()        
         Food_drawing.Draw_food( screen, view, food)
         draw_marker(screen, view, position) #draw for test marker
         for i in range(len(snake.get_body())):
             draw_body(screen, view, (snake.get_body()[i]))
+
+        # live scoreboard using erik methods by dexo
+            
+        headPos = snake.get_head()
+        foodPos = food.getFood()
+
+        if headPos == foodPos:
+            score +=5
+           
+
+        scoreboard_number = font.render(
+            f"Score: {score}",
+            True,(235, 235, 235)
+        )
+        screen.blit(scoreboard_number, (20, view.pixel_size[1] -640))   
+      
 
         message = font.render(
             "ESC: quit",
@@ -78,7 +96,7 @@ def main():
         screen.blit(message, (20, view.pixel_size[1] + 27))
 
         pygame.display.flip()
-        clock.tick(60)
+        
 
         if(snake.ouroboros()):
             running = False
@@ -87,6 +105,9 @@ def main():
             snake.increase_food_eaten()
             food.newFood(random.randint(0, board.width), random.randint(0, board.height))
 
+
+   
+        
     pygame.quit()
 
 

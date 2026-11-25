@@ -11,6 +11,7 @@ class Snake:
         self.__direction = (1, 0)
         self.__color = (0, 255, 0)
         self.__snake_speed = 6
+        self.__snake_speed = SnakeSpeed(self.__snake_speed)
         self.__startingBodyLenght = 3
         self.__foodEaten = 0
         self.spawnBody()
@@ -60,11 +61,9 @@ class Snake:
     def get_starting_lenght(self):
             return self.__startingBodyLenght
 
-    snakeSpeed = SnakeSpeed()
 
-    def snakeUpdate(self, cells_per_sec):
-        self.cells_per_sec = cells_per_sec
-        if(self.snakeSpeed.update(self.cells_per_sec)):
+    def snakeUpdate(self, dt):
+        if self.snakeSpeed.update(dt):
             self.snake_move()
             self.snakeBodyMovement()
             self.ouroboros()       

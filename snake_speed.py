@@ -2,7 +2,7 @@
 class SnakeSpeed:
     # speed should be the number of cells we want to move in a second
     def __init__(self, speed = 1):
-        self.interval = 100 / speed
+        self.interval = 1000 / speed
         self.timepassed = 0
 
     def update(self, dt):
