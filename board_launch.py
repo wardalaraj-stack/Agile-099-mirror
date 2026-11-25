@@ -7,6 +7,7 @@ from Food import Food
 from Food_drawing import Food_drawing
 import random
 from collision import food_collision
+from collision import find_free_spot
 
 
 #### test marker for borders#####
@@ -40,13 +41,16 @@ def main():
         view.pixel_size[0] + 40,
         view.pixel_size[1] + 40,
     ))
+
     pygame.display.set_caption("Snake - Board demo")
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 28)
     key_input = KeyInput()
     snake = Snake(random.randint(2, board.width -2), random.randint(2, board.height -2))
+
 #Food Logic
-    food = Food(random.randrange(0, board.width),random.randrange(0, board.height))
+    freeSpot = find_free_spot(board, snake.get_head(), snake.get_body())
+    food = Food(freeSpot[0], freeSpot[1])
 
     running = True
     while running:
@@ -56,17 +60,16 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-                    ##checks whether the pressed key is an arrow key. If it is,
-                    ##the code moves the marker one cell in that direction and saves its new position. 
-                    ## The helper(next marker possitionn) keeps it from moving off the board.
+
             key_input.set_direction(event)
         snake.set_direction(*key_input.get_direction())
         
         screen.fill((15, 15, 18))
         view.draw(screen)                 
         snake.snakeUpdate(snake.get_snake_speed()) #speed of snake
-        position = snake.get_head()        
-        Food_drawing.Draw_food( screen, view, food)
+        position = snake.get_head()     
+
+        Food_drawing.Draw_food(screen, view, food)
         draw_marker(screen, view, position) #draw for test marker
         for i in range(len(snake.get_body())):
             draw_body(screen, view, (snake.get_body()[i]))
@@ -85,7 +88,8 @@ def main():
 
         if(food_collision(food.getFood(), snake.get_head())): #this is really bad, fix this
             snake.increase_food_eaten()
-            food.newFood(random.randint(0, board.width), random.randint(0, board.height))
+            freeSpot = find_free_spot(board, snake.get_head(), snake.get_body())
+            food.newFood(freeSpot[0], freeSpot[1])
 
     pygame.quit()
 

@@ -1,3 +1,5 @@
+import random
+
 
 def position_is_occupied(position, occupied_positions):
     #is the position opcubied by snake/obstical/enemy/otherplayer 
@@ -28,3 +30,15 @@ def hits_obstacle(next_head, obstacles):
 def hits_snake(next_head, other_head, other_body):
     #future collision with another player
     return position_is_occupied(next_head, [other_head, *other_body])
+
+
+def random_position(board):
+    return (random.randrange(0, board.width), random.randrange(0, board.height))
+
+
+def find_free_spot(board, snake_head, snake_body):
+    occupied = [snake_head] + snake_body
+    position = random_position(board)
+    while position_is_occupied(position, occupied):
+        position = random_position(board)
+    return position
