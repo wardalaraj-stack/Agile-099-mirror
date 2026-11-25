@@ -16,5 +16,5 @@ class KeyInput:
         return self.__currentDirection
 
     def set_direction(self, event):
-        if event.type == pygame.KEYDOWN and event.key in self.__direction:
+        if event.type == pygame.KEYDOWN and event.key in self.__direction and self.__direction[event.key] != (-self.__currentDirection [0], -self.__currentDirection [1]):
             self.__currentDirection = self.__direction[event.key]
