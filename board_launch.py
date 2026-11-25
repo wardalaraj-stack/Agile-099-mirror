@@ -35,7 +35,7 @@ def draw_body(surface, view, position):
 def main():
     pygame.init()
 
-    board = Board(width=10, height=20, cell_size=32)
+    board = Board(width=40, height=20, cell_size=32)
 
     view = BoardView(board, offset=(20, 20))
     screen = pygame.display.set_mode((
