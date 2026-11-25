@@ -6,7 +6,7 @@ class Food:
         self.__currentPosition = (x, y)
 
     def newFood(self, x, y):
-        self.setFood(x, y)
+       self.__currentPosition = (x, y)
 
     def getFood(self):
         return self.__currentPosition
@@ -14,5 +14,4 @@ class Food:
     def getColor(self):
         return self.__color
 
-    def setFood(self, x, y):
-        self.__currentPosition = (x, y)
+        

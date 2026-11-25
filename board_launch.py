@@ -8,6 +8,7 @@ from Food_drawing import Food_drawing
 import random
 from collision import food_collision
 from collision import find_free_spot
+from collision import random_position
 
 
 #### test marker for borders#####
@@ -34,7 +35,7 @@ def draw_body(surface, view, position):
 def main():
     pygame.init()
 
-    board = Board(width=40, height=20, cell_size=32)
+    board = Board(width=10, height=20, cell_size=32)
 
     view = BoardView(board, offset=(20, 20))
     screen = pygame.display.set_mode((
@@ -45,8 +46,10 @@ def main():
     pygame.display.set_caption("Snake - Board demo")
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 28)
+    
     key_input = KeyInput()
-    snake = Snake(random.randint(2, board.width -2), random.randint(2, board.height -2))
+    randomspot = random_position(board)
+    snake = Snake(randomspot[0], randomspot[1])
 
 #Food Logic
     freeSpot = find_free_spot(board, snake.get_head(), snake.get_body())
