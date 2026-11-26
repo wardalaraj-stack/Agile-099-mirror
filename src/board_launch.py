@@ -1,13 +1,14 @@
 import pygame
 import random
 
+
 from src.key_input import KeyInput
 from src.snake import Snake
 from src.board import Board
 from src.board_view import BoardView
 from src.Food import Food
 from src.Food_drawing import Food_drawing
-from src.collision import random_position, find_free_spot, food_collision
+from src.collision import random_position, find_free_spot, food_collision, hits_border
 
 SNAKE_HEAD_INSET = 6
 MARKER_COLOR = (36, 91, 149)
@@ -67,6 +68,10 @@ def main():
 
         #speed of snake
         snake.snakeUpdate(snake.get_snake_speed()) 
+        
+        # Stop the game if the snake hits the map border
+        if hits_border(snake.get_head(), board):
+         break
 
         # Render the snake's head
         draw_snake_head(screen, board_view, snake.get_head(), snake.get_color())
