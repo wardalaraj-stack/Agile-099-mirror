@@ -1,7 +1,5 @@
 import random
 import json
-import os 
-
 
 #global variables
 playerName = str(input('Enter your name > '))
@@ -11,32 +9,26 @@ filename = 'scoreboard.json'
 
 
 def score_storage(playerName, score):
-    with open(filename, 'a') as file:
+    with open(filename, 'a', encoding="utf-8") as file:
         file.write(f'{playerName} > {str(score)}; \n')
-        file.close
 
 def leaderboard():
     scores = []
+    with open(filename, 'r', encoding="utf-8") as file:
+        for line in file:
+            playerName, playerScore = line.strip().removesuffix(";").rsplit(" > ", 1)
+            scores.append([playerName, int(playerScore)])
+    
+    topScores = sorted(scores, key=lambda sort:sort[1], reverse = True)[:5]
 
-    for line in file:
-        updatedList = line.split(';')
-        if len(updatedList)==3:
-            playerName = updatedList[0]
-            playerScore = int(updatedList[1])
-            scores.append([playerName, playerScore])
-            with open(filename, 'r') as file:
-                   json.dump(scores, file)
-            file.close()
-
-    sortedScores = sorted(scores, key=lambda sort:sort[1])
-
-    del sortedScores [5:]
+    with open('leaderboard.json', 'w', encoding="utf-8") as output_file:
+        json.dump(topScores, output_file)
 
     print('--Leaderboard--')
     place = 1
-    for score in sortedScores:
-        print(f'{str(place)}: {str(score[1])}')
+    for score in topScores:
         place = place + 1
+    return topScores
 
 score_storage(playerName, score)
 leaderboard()
