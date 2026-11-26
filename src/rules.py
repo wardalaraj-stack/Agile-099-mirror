@@ -1,4 +1,3 @@
-
 class BoardRule():
-    #Place for Future rules of the cells to be implemented 
-    pass 
+    # Placehlder for future cell rules.
+    pass
