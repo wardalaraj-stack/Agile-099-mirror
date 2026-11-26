@@ -1,15 +1,22 @@
 import random
+import json
+import os 
 
-playerName = input('Enter your name > ')
+
+#global variables
+playerName = str(input('Enter your name > '))
 score = random.randint(0,2000)
+filename = 'scoreboard.json'
+
+
 
 def score_storage(playerName, score):
-    file = open('scoreboard.txt', 'a')
-    file.write(f'{playerName} > {str(score)}; \n')
-    file.close()
+    with open(filename, 'a') as file:
+        file.write(f'{playerName} > {str(score)}; \n')
+        file.close
 
 def leaderboard():
-    file = open('scoreboard.txt', 'r')
+    with open(filename, 'r') as file:
     scores = []
 
     for line in file:
