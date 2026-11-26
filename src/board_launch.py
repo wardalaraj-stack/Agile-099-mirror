@@ -105,7 +105,6 @@ def main():
 
         if(snake.ouroboros()):
             running = False
-        print(food.getFood(), snake.get_head())
         if(food_collision(food.getFood(), snake.get_head())): #this is really bad, fix this
             snake.increase_food_eaten()
             freeSpot = find_free_spot(board, snake.get_head(), snake.get_body())
