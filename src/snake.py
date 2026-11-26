@@ -97,10 +97,4 @@ class Snake:
 
     speed_controller = SnakeSpeed()
 
-    def move(self, cells_per_sec):
-        self.cells_per_sec = cells_per_sec
-        if self.speed_controller.update(self.cells_per_sec):
-            self.set_head(
-                self.get_head()[0] + self.get_direction()[0],
-                self.get_head()[1] + self.get_direction()[1]
-            )
+    

@@ -28,7 +28,7 @@ def draw_body(surface, view, position):
 
 def main():
     pygame.init()
-
+    score = 0
     board = Board(width=40, height=20, cell_size=32)
 
     board_view = BoardView(board, offset=(20, 20))
@@ -63,7 +63,7 @@ def main():
 
         screen.fill((15, 15, 18))
         board_view.draw(screen)
-
+        
 
         #speed of snake
         snake.snakeUpdate(snake.get_snake_speed()) 
@@ -79,6 +79,21 @@ def main():
         #draw_marker(screen, board_view, position) #draw for test marker
         for i in range(len(snake.get_body())):
             draw_body(screen, board_view, (snake.get_body()[i]))
+        
+        # logic for adding score 
+        headPos = snake.get_head()
+        foodPos = food.getFood()
+
+        if headPos == foodPos:
+            score += 5
+
+        # score display
+        score_display = font.render(
+            f"Score: {score}",
+            True, (255, 255, 255)
+        )
+     
+        screen.blit(score_display, (20, board_view.pixel_size[1] - 640))
 
         quit_message = font.render(
             "ESC: quit",
@@ -99,11 +114,11 @@ def main():
 
 
 
-        # Speed of snake
-        snake.move(snake.get_speed())
+       
 
     pygame.quit()
 
-
+    
+    print(score)
 if __name__ == "__main__":
     main()
