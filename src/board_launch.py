@@ -21,19 +21,6 @@ def draw_snake_head(surface, board_view, head_position, head_color):
     pygame.draw.ellipse(surface, head_color, head_rect)
 
 
-def next_marker_position(board, position, step):
-    column, row = position
-    column_step, row_step = step
-    candidate = column + column_step, row + row_step
-    return position if board.outside_edges(candidate) else candidate
-
-
-
-def draw_marker(surface, view, position):
-    rect = view.cell_rect(position).inflate(-2 * MARKER_INSET, -2 * MARKER_INSET)
-    pygame.draw.ellipse(surface, MARKER_COLOR, rect)
-#### end test marker for bordar
-
 def draw_body(surface, view, position):
     rect = view.cell_rect(position).inflate(-2 * MARKER_INSET, -2 * MARKER_INSET)
     pygame.draw.ellipse(surface, MARKER_COLOR, rect)
@@ -89,7 +76,7 @@ def main():
         Food_drawing.Draw_food(screen, board_view, food)
 
 
-        draw_marker(screen, board_view, position) #draw for test marker
+        #draw_marker(screen, board_view, position) #draw for test marker
         for i in range(len(snake.get_body())):
             draw_body(screen, board_view, (snake.get_body()[i]))
 
