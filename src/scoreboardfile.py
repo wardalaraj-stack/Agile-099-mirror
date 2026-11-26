@@ -16,7 +16,6 @@ def score_storage(playerName, score):
         file.close
 
 def leaderboard():
-    with open(filename, 'r') as file:
     scores = []
 
     for line in file:
@@ -24,8 +23,10 @@ def leaderboard():
         if len(updatedList)==3:
             playerName = updatedList[0]
             playerScore = int(updatedList[1])
-            scores.append(playerName, playerScore)
-    file.close()
+            scores.append([playerName, playerScore])
+            with open(filename, 'r') as file:
+                   json.dump(scores, file)
+            file.close()
 
     sortedScores = sorted(scores, key=lambda sort:sort[1])
 
