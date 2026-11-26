@@ -4,6 +4,9 @@ from src.key_input import KeyInput
 from src.snake import Snake
 from src.board import Board
 from src.board_view import BoardView
+from src.Food import Food
+from src.Food_drawing import Food_drawing
+from src.collision import random_position, find_free_spot
 
 SNAKE_HEAD_INSET = 6
 
