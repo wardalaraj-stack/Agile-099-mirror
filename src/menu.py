@@ -115,8 +115,6 @@ def main():
     )
     audio_button.pack(pady=5, padx=5)
 
-    scoreboard_frame = tk.Frame(root, bg="Yellow")
-
 
     back_button = tk.Button(
         settings_frame,
@@ -127,4 +125,15 @@ def main():
     )
     back_button.pack(pady=5, padx=5)
 
+#scoreboard
+    scoreboard_frame = tk.Frame(root, bg="Yellow")
+
+    back_button = tk.Button(
+        scoreboard_frame,
+        text="Back to Main menu",
+        command=lambda: show_frame(main_menu_frame),
+        width=15,
+        height=2
+    )
+    back_button.pack(pady=5, padx=5)
     root.mainloop()
