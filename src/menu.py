@@ -20,7 +20,7 @@ def main():
     root.rowconfigure(1, weight=1)
 
     def show_frame(target_frame):
-        for frame in (settings_frame, main_menu_frame, start_game_frame):
+        for frame in (settings_frame, main_menu_frame, start_game_frame, scoreboard_frame):
             frame.place_forget()
         target_frame.place(relx=0.5, rely=0.5, anchor="center")
 
@@ -52,6 +52,7 @@ def main():
     scoreboard_button = tk.Button(
         main_menu_frame,
         text="Scoreboard",
+        command=lambda: show_frame(scoreboard_frame),
         width=15,
         height=2
     )
@@ -113,6 +114,9 @@ def main():
         height=2
     )
     audio_button.pack(pady=5, padx=5)
+
+    scoreboard_frame = tk.Frame(root, bg="Yellow")
+
 
     back_button = tk.Button(
         settings_frame,
