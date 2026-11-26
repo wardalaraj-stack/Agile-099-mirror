@@ -29,9 +29,15 @@ def main():
     pygame.display.set_caption("Snake - Board demo")
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 28)
-    key_input = KeyInput()
-    snake = Snake(0, 0)
 
+    key_input = KeyInput()
+    randomspot = random_position(board)
+    snake = Snake(randomspot[0], randomspot[1])
+    
+    #Food Logic
+    freeSpot = find_free_spot(board, snake.get_head(), snake.get_body())
+    food = Food(freeSpot[0], freeSpot[1])
+    
     running = True
     while running:
         for event in pygame.event.get():
@@ -61,6 +67,10 @@ def main():
 
         # Speed of snake
         snake.move(snake.get_speed())
+
+        #Food spawining Logic
+        Food_drawing.Draw_food(screen, board_view, food)
+
 
     pygame.quit()
 
