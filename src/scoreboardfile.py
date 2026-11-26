@@ -4,7 +4,7 @@ import json
 #global variables
 playerName = str(input('Enter your name > '))
 score = random.randint(0,2000)
-filename = 'scoreboard.json'
+filename = 'leaderboard.json'
 
 
 
