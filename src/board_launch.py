@@ -72,7 +72,7 @@ def main():
         draw_snake_head(screen, board_view, snake.get_head(), snake.get_color())
        
         #Food spawining Logic
-        position = snake.get_head()     
+        #position = snake.get_head()     
         Food_drawing.Draw_food(screen, board_view, food)
 
 
