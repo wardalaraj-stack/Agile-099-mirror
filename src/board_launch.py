@@ -1,4 +1,5 @@
 import pygame
+import random
 
 from src.key_input import KeyInput
 from src.snake import Snake
@@ -6,10 +7,11 @@ from src.board import Board
 from src.board_view import BoardView
 from src.Food import Food
 from src.Food_drawing import Food_drawing
-from src.collision import random_position, find_free_spot
+from src.collision import random_position, find_free_spot, food_collision
 
 SNAKE_HEAD_INSET = 6
-
+MARKER_COLOR = (36, 91, 149)
+MARKER_INSET = 6
 
 def draw_snake_head(surface, board_view, head_position, head_color):
     head_rect = board_view.cell_rect(head_position).inflate(
@@ -18,6 +20,11 @@ def draw_snake_head(surface, board_view, head_position, head_color):
     )
     pygame.draw.ellipse(surface, head_color, head_rect)
 
+
+def draw_body(surface, view, position):
+    rect = view.cell_rect(position).inflate(-2 * MARKER_INSET, -2 * MARKER_INSET)
+    pygame.draw.ellipse(surface, MARKER_COLOR, rect)
+    
 
 def main():
     pygame.init()
@@ -29,6 +36,7 @@ def main():
         board_view.pixel_size[0] + 40,
         board_view.pixel_size[1] + 40,
     ))
+
     pygame.display.set_caption("Snake - Board demo")
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 28)
@@ -56,8 +64,21 @@ def main():
         screen.fill((15, 15, 18))
         board_view.draw(screen)
 
+
+        #speed of snake
+        snake.snakeUpdate(snake.get_snake_speed()) 
+
         # Render the snake's head
         draw_snake_head(screen, board_view, snake.get_head(), snake.get_color())
+       
+        #Food spawining Logic
+        #position = snake.get_head()     
+        Food_drawing.Draw_food(screen, board_view, food)
+
+
+        #draw_marker(screen, board_view, position) #draw for test marker
+        for i in range(len(snake.get_body())):
+            draw_body(screen, board_view, (snake.get_body()[i]))
 
         quit_message = font.render(
             "ESC: quit",
@@ -68,12 +89,18 @@ def main():
         pygame.display.flip()
         clock.tick(60)
 
+
+        if(snake.ouroboros()):
+            running = False
+        if(food_collision(food.getFood(), snake.get_head())): #this is really bad, fix this
+            snake.increase_food_eaten()
+            freeSpot = find_free_spot(board, snake.get_head(), snake.get_body())
+            food.newFood(freeSpot[0], freeSpot[1])
+
+
+
         # Speed of snake
-        snake.move(snake.get_speed())
-
-        #Food spawining Logic
-        Food_drawing.Draw_food(screen, board_view, food)
-
+       # snake.move(snake.get_speed())
 
     pygame.quit()
 
