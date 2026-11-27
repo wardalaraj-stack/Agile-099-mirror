@@ -143,8 +143,8 @@ def main():
     score_table.column("player", width=100)
     score_table.column("score", width=80, anchor="e")
 
-    for place in scoreboard_frame:
-        score_table.insert('')
+   # for place in scoreboard_frame:
+    #    score_table.insert('')
 
 
     score_table.pack(padx=12, pady=12)
