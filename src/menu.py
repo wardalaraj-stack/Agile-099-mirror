@@ -1,5 +1,6 @@
 import tkinter as tk
-from src import board_launch
+from tkinter import ttk
+from src import board_launch, scoreboardfile
 
 
 def main():
@@ -20,7 +21,7 @@ def main():
     root.rowconfigure(1, weight=1)
 
     def show_frame(target_frame):
-        for frame in (settings_frame, main_menu_frame, start_game_frame):
+        for frame in (settings_frame, main_menu_frame, start_game_frame, scoreboard_frame):
             frame.place_forget()
         target_frame.place(relx=0.5, rely=0.5, anchor="center")
 
@@ -52,6 +53,7 @@ def main():
     scoreboard_button = tk.Button(
         main_menu_frame,
         text="Scoreboard",
+        command=lambda: show_frame(scoreboard_frame),
         width=15,
         height=2
     )
@@ -114,6 +116,7 @@ def main():
     )
     audio_button.pack(pady=5, padx=5)
 
+
     back_button = tk.Button(
         settings_frame,
         text="Back to Main menu",
@@ -123,4 +126,36 @@ def main():
     )
     back_button.pack(pady=5, padx=5)
 
+#scoreboard
+    scoreboard_frame = tk.Frame(root, bg="Yellow")
+
+    score_table = ttk.Treeview(
+        scoreboard_frame,
+        columns=("place", "player", "score"),
+        show="headings",
+        height=5,
+    )
+    score_table.heading('place', text = 'Place')
+    score_table.heading('player', text = 'Player')
+    score_table.heading('score', text = 'Score')
+
+    score_table.column("place", width=80, anchor="center")
+    score_table.column("player", width=100)
+    score_table.column("score", width=80, anchor="e")
+
+    for place in scoreboard_frame:
+        score_table.insert('')
+
+
+    score_table.pack(padx=12, pady=12)
+
+
+    back_button = tk.Button(
+        scoreboard_frame,
+        text="Back to Main menu",
+        command=lambda: show_frame(main_menu_frame),
+        width=15,
+        height=2
+    )
+    back_button.pack(pady=5, padx=5)
     root.mainloop()
