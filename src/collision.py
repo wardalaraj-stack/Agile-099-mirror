@@ -42,3 +42,10 @@ def find_free_spot(board, snake_head, snake_body):
     while position_is_occupied(position, occupied):
         position = random_position(board)
     return position
+
+def hits_border(next_head, board):
+    # Check if the snake's head is outside the board
+    if board.contains(next_head):
+        return False
+    else:
+        return True
