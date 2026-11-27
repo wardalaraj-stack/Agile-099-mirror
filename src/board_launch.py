@@ -29,7 +29,6 @@ def draw_body(surface, view, position):
 
 def main():
     pygame.init()
-    score = 0
     board = Board(width=40, height=20, cell_size=32)
 
     board_view = BoardView(board, offset=(20, 20))
@@ -86,6 +85,7 @@ def main():
             draw_body(screen, board_view, (snake.get_body()[i]))
         
         # logic for adding score 
+        score = 0
         headPos = snake.get_head()
         foodPos = food.getFood()
 
@@ -122,6 +122,9 @@ def main():
        
 
     pygame.quit()
+
+    def show_score(score):
+        return score
 
     return score
     

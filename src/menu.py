@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from src import board_launch, scoreboardfile
+from src import board_launch
 
 
 def main():
@@ -53,7 +53,7 @@ def main():
     scoreboard_button = tk.Button(
         main_menu_frame,
         text="Scoreboard",
-        command=lambda: show_frame(scoreboard_frame),
+        command=lambda: show_scoreboard(scoreboard_frame),
         width=15,
         height=2
     )
@@ -128,6 +128,16 @@ def main():
 
 #scoreboard
     scoreboard_frame = tk.Frame(root, bg="Yellow")
+   
+    def show_scoreboard():
+        top_scores = scoreboardfile.leaderboard()
+        for row in score_table.get_children():
+            score_table.delete(row)
+        for place, (player, score) in enumerate(top_scores, start = 1):
+
+            pass
+
+   
 
     score_table = ttk.Treeview(
         scoreboard_frame,
@@ -143,8 +153,8 @@ def main():
     score_table.column("player", width=100)
     score_table.column("score", width=80, anchor="e")
 
-    for place in scoreboard_frame:
-        score_table.insert('')
+    # for place in scoreboard_frame:
+    #     score_table.insert('')
 
 
     score_table.pack(padx=12, pady=12)
